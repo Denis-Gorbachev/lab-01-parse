@@ -21,7 +21,7 @@ HunterGate(
 )
 
 # TODO: rename project and delete this comment
-project(template VERSION 0.1.0)
+project(lab1 VERSION 0.1.0)
 string(APPEND CMAKE_CXX_FLAGS " -pedantic -Werror -Wall -Wextra")
 string(APPEND CMAKE_CXX_FLAGS " -Wno-unused-command-line-argument")
 string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
@@ -29,28 +29,33 @@ string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
 # new versions of cmake contain gtest search files
 # commented out to increase the build speed.
 # hunter_add_package(GTest)
+hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
+hunter_add_package(nlohmann_json)
+find_package(nlohmann_json CONFIG REQUIRED)
+
 
 add_library(${PROJECT_NAME} STATIC
   # enum your files and delete this comment
-  ${CMAKE_CURRENT_SOURCE_DIR}/sources/example.cpp
-)
+        ${CMAKE_CURRENT_SOURCE_DIR}/sources/students.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/students.hpp
+        )
 
 add_executable(demo
   ${CMAKE_CURRENT_SOURCE_DIR}/demo/main.cpp
 )
-
+target_link_libraries(${PROJECT_NAME} nlohmann_json::nlohmann_json)
 target_include_directories(${PROJECT_NAME} PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
   "$<INSTALL_INTERFACE:include>"
 )
 
-target_link_libraries(demo ${PROJECT_NAME})
+target_link_libraries(demo PUBLIC ${PROJECT_NAME})
 
 if(BUILD_TESTS)
   add_executable(tests
-    # TODO: enum your files and delete this comment
-    ${CMAKE_CURRENT_SOURCE_DIR}/tests/example.cpp
+          ${CMAKE_CURRENT_SOURCE_DIR}/tests/test.cpp
+          ${CMAKE_CURRENT_SOURCE_DIR}/tests/students.json
   )
   target_link_libraries(tests ${PROJECT_NAME} GTest::gtest_main)
   enable_testing()
@@ -77,7 +82,6 @@ if(BUILD_DOCS)
   install(DIRECTORY ${DOXYGEN_OUTPUT_DIRECTORY}/man DESTINATION share)
   # add_dependencies(install docs) need to call target docs before install or package
 endif()
-
 include(CPackConfig.cmake)
 
 install(TARGETS ${PROJECT_NAME} demo

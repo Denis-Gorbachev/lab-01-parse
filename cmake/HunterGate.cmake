@@ -488,7 +488,6 @@ macro(HunterGate)
         "${HUNTER_GATE_SHA1}"
         _hunter_self
     )
-
     set(_master_location "${_hunter_self}/cmake/Hunter")
     get_filename_component(_archive_id_location "${_hunter_self}/.." ABSOLUTE)
     set(_done_location "${_archive_id_location}/DONE")
