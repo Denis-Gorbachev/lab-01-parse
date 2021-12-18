@@ -67,10 +67,12 @@ std::vector<Student> parse_file(json &data){
 }
 
 void print(){
-    std::cout << "|" << " name" << std::setfill(' ') << std::setw(20) << "|" << " group" << std::setw(4)
-              << "|" << " avg" << std::setw(6) << "|" << " debt" << std::setw(5) << "|" << std::endl
-              << "|" << std::setfill('-') << std::setw(25) << "|" << std::setw(10)
-              << "|" << std::setw(10) << "|" << std::setw(10) << "|" << std::endl;
+    std::cout << "|" << " name" << std::setfill(' ') << std::setw(20)
+              << "|" << " group" << std::setw(4) << "|" << " avg"
+              << std::setw(6) << "|" << " debt" << std::setw(5)
+              << "|" << std::endl << "|" << std::setfill('-') << std::setw(25)
+              << "|" << std::setw(10) << "|" << std::setw(10) << "|"
+              << std::setw(10) << "|" << std::endl;
 }
 
 void print(const Student& student, std::ostream& os){
@@ -81,7 +83,7 @@ void print(const Student& student, std::ostream& os){
         os << std::setw(9) << std::left << std::any_cast<std::string>(student.group)
            << std::right << "|";
     else
-        os << std::setw(9) << std::left <<  std::any_cast<size_t>(student.group)
+        os << std::setw(9) << std::left << std::any_cast<size_t>(student.group)
            << "|";
     if ( student.avg.type() == typeid(std::string) )
         os << std::setw(9) << std::left
@@ -95,15 +97,17 @@ void print(const Student& student, std::ostream& os){
     if (student.debt.type() == typeid(std::nullptr_t))
         os << std::setw(9) << std::left << "null" << "|" << std::endl;
     else if (student.debt.type() == typeid(std::string))
-        os << std::setw(9) << std::left << std::any_cast<std::string>(student.debt)
+        os << std::setw(9) << std::left
+         << std::any_cast<std::string>(student.debt)
            << "|" << std::endl;
     else  os << std::setw(1) << std::left
              << std::any_cast<std::vector<std::string>>(student.debt).size()
              << std::setw(8) << std::left
              << " items" << std::right << "|" << std::endl;
 
-    os << std::right << "|" << std::setfill('-') << std::setw(25) << "|" << std::setw(10)
-    << "|" << std::setw(10) << "|" << std::setw(10) << "|" << std::endl;
+    os << std::right << "|" << std::setfill('-') << std::setw(25)
+       << "|" << std::setw(10) << "|" << std::setw(10) << "|"
+       << std::setw(10) << "|" << std::endl;
 }
 void print(std::vector<Student> &students, std::ostream &os) {
     print();
