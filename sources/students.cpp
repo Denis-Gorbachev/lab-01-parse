@@ -80,7 +80,8 @@ void print(const Student& student, std::ostream& os){
        << std::left << std::any_cast<std::string>(student.name)
        << std::right << "|";
     if (student.group.type() == typeid(std::string))
-        os << std::setw(9) << std::left << std::any_cast<std::string>(student.group)
+        os << std::setw(9) << std::left
+           << std::any_cast<std::string>(student.group)
            << std::right << "|";
     else
         os << std::setw(9) << std::left << std::any_cast<size_t>(student.group)
